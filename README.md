@@ -96,7 +96,7 @@ Spork will provide the following breakout options:
 
 Here's an overview of the card layout:
 
-![spork_overview_diagram](docs\images\spork_overview_diagram.png)
+![spork_overview_diagram](docs/images/spork_overview_diagram.png)
 
 While the older Network-MS card interface has only 6 pins, which could be transported over just one cable, the newer Network-M2 card has 10 pins (5 per side) on the same card-edge form factor. The cost and inconvenience of using two cables is far outweighed by the benefit of having a design that works with newer cards as well as older ones.
 
