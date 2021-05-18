@@ -1,9 +1,5 @@
 # Open Network-MS
 
-## Table of contents
-
-[TOC]
-
 ## What's this?
 
 This project's goal is to build an Arduino-based open-source hardware replacement for Eaton / MGE UPS network cards.
