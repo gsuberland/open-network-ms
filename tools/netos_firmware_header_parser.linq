@@ -2,6 +2,8 @@
   <Reference Relative="..\..\CSharp-Playground\LzssAlgorithmImplementation\LzssAlgorithm\bin\Release\LzssAlgorithm.dll">C:\Users\Graham\source\repos\CSharp-Playground\LzssAlgorithmImplementation\LzssAlgorithm\bin\Release\LzssAlgorithm.dll</Reference>
 </Query>
 
+/* THESE ARE PROBABLY WRONG!
+This was based on an assumption that the flags would be sequential as in the docs, but there's no definition of the actual values in the documentation. */
 [Flags]
 enum HeaderFlags : UInt32
 {
