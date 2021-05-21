@@ -35,7 +35,11 @@ The goals and guiding principles of the project are as follows:
 
 ## Status
 
-As of May 2021, this project is in the very early stages of reverse engineering the existing systems. No hardware or software has been built.
+As of the 21st of May 2021, this project is in the very early stages of reverse engineering the existing systems.
+
+The first piece of hardware, codename Spork, has gone through a draft design and will be going for production within the next week.
+
+No other hardware or software has been designed yet.
 
 ## Test Hardware
 
@@ -75,8 +79,8 @@ There are four primary phases to the project:
 
 1. Codename ***Spork*** - A simple interposer board that enables initial reverse engineering work without disassembly of the UPS.
 2. Codename ***Chopstick*** - The first prototype, utilising an external ESP32 development board.
-3. Codename ***Sushi*** - A refined version of Chopstick, with the ESP32 and USB interface integrated directly into the board.
-4. Codename ***Peppercorn*** - A more advanced version of the card with a wired network port.
+3. Codename ***Sushi*** - A refined version of Chopstick, with wired Ethernet and an SD card.
+4. Codename ***Peppercorn*** - A fully integrated card with the ESP32 brought onboard, no longer relying upon a plug-in dev board.
 
 ### Spork
 
@@ -102,6 +106,19 @@ While the older Network-MS card interface has only 6 pins, which could be transp
 
 Using just 5 signals per cable has some advantages, too. The swapped pair (see DB in the [TIA-568 Wikipedia article](https://en.wikipedia.org/wiki/ANSI/TIA-568#Wiring)) doesn't need to be accounted for, since we can just use the DA, DC, and DD pairs. Signal referencing can be improved with some basic preliminary reverse engineering, to identify the ground and power lines and ensure that they are coupled with signal lines where possible.
 
+#### Reverse engineering questions
+
+- [ ] What's the pinout of the card edge connector?
+- [ ] What voltage(s) are provided? 5V expected since LT1507 buck regulator is present.
+- [ ] What's the physical layer for communications? 3.3V UART seems likely.
+- [ ] What's the transport layer? Modbus Serial RTU seems likely since the card was made by Schneider Electric. JBUS is also a possibility since it is mentioned in docs.
+
+#### Status
+
+As of 2021-05-21, a draft version of the Spork PCB has been designed, and it is expected to be sent for manufacturing within the next week.
+
+Some initial investigation into the Network-MS card has been done. The firmware appears to be based on Digi NET+OS. A [firmware header parsing script](tools/netos_firmware_header_parser.linq) has been created to extract some information about the firmware update files. The data in the files appears to be compressed or otherwise encoded, though, so I haven't managed to reverse engineer any of the ARM7 stuff out of them yet. The documentation mentions LZSS, LZSS2, and LZ77, but the flags in the header _seem_ to indicate that the data isn't actually compressed. However, I'm making that assumption based on the idea that the `BL_WRITE_TO_FLASH`, `BL_LZSS_COMPRESSED`, `BL_LZSS2_COMPRESSED`, etc. flags are sequential, which probably isn't correct - sadly I can't get hold of the NET+OS source or BSPs to confirm this. Efforts to decompress the payloads has yet to yield any results.
+
 ### Chopstick
 
 Chopstick will be the first working prototype card. It will be based on an ESP32 MCU, which provides WiFi and Bluetooth connectivity.
@@ -110,12 +127,12 @@ To simplify the design, the card will most likely have a slot for an DO1T (aka D
 
 Likely hardware features include:
 
-- Onboard 3.3V and 5.0V regulation from the UPS power rail (possibly [TPS6300x](https://www.ti.com/product/TPS63000) buck-boost)
+- Onboard 3.3V and 5.0V regulation from the UPS power rail (possibly [TPS6300x](https://www.ti.com/product/TPS63000) buck-boost).
 - 5V tolerant I/O with the UPS.
 - Full TVS diode coverage of all I/O connectors.
 - External temperature and humidity sensing (DHT sensor)
 - Internal temperature and humidity sensing (Sensirion SHT sensor)
-- Locator LED.
+- Locator and status LEDs. Possibly something RGB for multi-function use.
 - External alarm signal (likely hi-Z, pulled to 0V when alarm asserted)
 
 Possible hardware features include:
@@ -124,9 +141,32 @@ Possible hardware features include:
 - External GPIO, SPI, and/or I2C.
 - NC/NO alarm signals.
 
+This version will be a fairly rough initial design, with less attention paid to part placement.
+
+#### Design decisions
+
+- [ ] What switching regs should be used?
+- [ ] Can we bypass the onboard linear reg on the ESP32 dev board and drive 3V3 directly?
+- [ ] Which IO buffer should be used on the UPS side? Consider propagation delay if IO rate is high.
+- [ ] Which IO buffer should be used on the 
+
 ### Sushi
 
-Sushi will be the first fully integrated design. The MCU will be bought on board, so there is no longer any dependence on the external dev board. This will be the first device that's more of an actual tool than a development platform.
+Sushi is the second prototype iteration. It will add wired Ethernet support and an SD card. Sushi will continue to use an ESP32 dev board.
+
+The most likely candidate PHY is the WIZnet W5500, since there are existing libraries that should just work out of the box. The main attraction is that the W5xxx series chips have excellent library support and are interfaced via SPI, meaning that only one dedicated GPIO is consumed by it.
+
+The ESP32 has an inbuilt 10/100 Ethernet MAC interface that can talk to a PHY over an RMII interface. This has some benefits: the RMII interface uses DMA, so it's much faster and uses less CPU time for transfers, and the MAC supports VLAN tagging features, which the W5500 doesn't. The major downside is that RMII requires a dedicated 9 pin interface, which eats up half of the GPIOs on even the bigger ESP32 modules.
+
+Unless someone can come up with an incredibly compelling reason to use RMII, the plan is a W5500 or similar SPI-based chip.
+
+There's no point talking about gigabit, since the ESP32 MAC doesn't support it even with a full 17-pin MII interface.
+
+An SD card slot will likely be added, for storing configuration data and logs.
+
+### Peppercorn
+
+Peppercorn will be the first fully integrated design. The MCU will be bought on board, so there is no longer any dependence on the external dev board. This will be the first device that's more of an actual tool than a development platform.
 
 Depending on how many issues there are with WiFi and BT reception on modules that use an integrated antenna, the regular ESP32 module may be replaced with one of the IPEX options, to allow for an external antenna.
 
@@ -134,19 +174,7 @@ The ESP32-IROVER-IE module seems like a good choice. Dual core, 80-240MHz, 20x G
 
 The USB interface will be handled by one of the cheap CP120x chips. Works fine for all of the dev boards.
 
-An SD card slot will likely be added, for storing configuration data and logs.
-
 A face plate for the board will be cut from plastic using a laser cutter.
-
-### Peppercorn
-
-Peppercorn will continue to use an ESP32 MCU, but will add an Ethernet PHY chip for a wired network connection. The most likely candidate is the WIZnet W5500, since there are existing libraries that should just work out of the box. The main attraction is that the W5xxx series chips have excellent library support and are interfaced via SPI, meaning that only one dedicated GPIO is consumed by it.
-
-The ESP32 has an inbuilt 10/100 Ethernet MAC interface that can talk to a PHY over an RMII interface. This has some benefits: the RMII interface uses DMA, so it's much faster and uses less CPU time for transfers, and the MAC supports VLAN tagging features, which the W5500 doesn't. The major downside is that RMII requires a dedicated 9 pin interface, which eats up half of the GPIOs on even the bigger ESP32 modules.
-
-Unless someone can come up with an incredibly compelling reason to use RMII, the plan is a W5500 or similar SPI-based chip.
-
-There's no point talking about gigabit, since the ESP32 MAC doesn't support it even with a full 17-pin MII interface.
 
 ### Beyond
 
