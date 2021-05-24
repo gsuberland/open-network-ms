@@ -1,0 +1,10 @@
+# Datasheets
+
+| Part Name                     | Part Number     | Files                                                        | External Links                                               | Notes                                                        |
+| ----------------------------- | --------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Card Edge 26P 2.54mm          | 5145274-1       | [Drawing](TE_CardEdge_26P_ENG_CD_5145274_B.tif)              | [Product Info](https://www.te.com/global-en/product-5145274-1.html) | Card edge slot, fits Network-MS cards.                       |
+| TPS6300x Buck-Boost Regulator | TPS6300x        | [Datasheet](tps63000_buck_boost.pdf)                         | [Product Info](https://www.ti.com/product/TPS63000)          | Good candidate buck-boost for generating voltage rails from whatever voltage the UPS provides. TPS630000 for adjustable, TPS63001 for 3.3V, TPS63002 for 5V. |
+| ESP32 WROVER IE               | ESP32-WROVER-IE | [Datasheet](esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf) |                                                              |                                                              |
+| CP1202 UART to USB Bridge     | CP1202          | [Datasheet](cp1202_uart_usb.pdf)                             |                                                              | For the USB bridge in Peppercorn.                            |
+| W5500 Ethernet PHY            | W5500           | [Datasheet](w5500_ds_v109e.pdf)<br />[Reference Schematic (ext. transformer)](w5500_sch_v110_use_trans_.pdf)<br />[Reference Schematic (RJ45 magnetics)](w5500_sch_v110_use_mag_.pdf) | [Product Info](https://www.wiznet.io/product-item/w5500/)    | Almost certainly the Ethernet PHY that'll be used in Sushi and onwards. Uses 80MHz SPI rather than MII/RMII. Well supported by libraries. |
+
