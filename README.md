@@ -2,7 +2,7 @@
 
 ## What's this?
 
-This project's goal is to build an Arduino-based open-source hardware replacement for Eaton / MGE UPS network cards.
+This project's goal is to build an Arduino-based open-source hardware replacement for Eaton / MGE UPS network cards, primarily the Network MiniSlot (MS) card, also referred to internally as NMC1.
 
 ## Why?
 
@@ -41,38 +41,6 @@ The first piece of hardware, codename Spork, has gone through a draft design and
 
 No other hardware or software has been designed yet.
 
-## Test Hardware
-
-The following hardware is being used for development.
-
-### UPS products
-
-- MGE Pulsar Evolution 3000 UPS
-
-### Network cards
-
-- Eaton Network-MS Card
-  - Thought to be technical level 06 or 07.
-  - Thought to be card revision FA.
-  - Part number: `710-00255-06P`
-  - Front silkscreen: `CARTE NMC1 34003816XD_1FA`
-  - Rear silkscreen: `CARTE NMC1 34003816XD_6FA`
-- MGE 66102 Card
-  - Too early a hardware revision for the Pulsar Evolution 3000, so mostly being used as a hardware reference.
-  - Technical level 03.
-  - Card revision CA.
-  - P/N ???? (need to dig the card out to check)
-  - Front silkscreen `CARTE NMC1 34003816XD_1CA`
-  - Rear silkscreen `CARTE NMC1 34003816XD_6CA`
-
-### Expanding coverage
-
-If you have an Eaton UPS and a Network-MS card, and would like to help out, please get in touch. Dumping the card IO while browsing through the web panel can provide a ton of insight into how various features work.
-
-If you wish to donate a Network-MS or Network-M2 card of any technical level, please let me know. Higher technical levels are preferred; a revision JA (technical level 17) Network-MS card would help a lot. I'd also be interested if you want to sell a card, as long as it's a significantly later technical level than I already have.
-
-If you happen to have an older UPS that's supported by a technical level 06 card (check section 1.2.1 of the [Network-MS user guide](docs/eaton-network-card-ms-user-guide-manual.pdf) for a full list), but are using a more modern Network-MS card - i.e. technical level 08 or higher - please consider swapping your card with mine to help out this project. I can offer some compensation if needed.
-
 ## Hardware Roadmap
 
 There are four primary phases to the project:
@@ -86,38 +54,13 @@ There are four primary phases to the project:
 
 Spork is an interposer that sits between a real network card and the UPS, making it easier to hook into the electrical signals with an oscilloscope or other test equipment. It has no functionality of its own - it is simply an electrical pass-through with test points.
 
-The point of the Spork board is convenience. Needing to work on a partially disassembled UPS and reach around the back of my server rack makes working on the project far more of a hassle than it needs to be. Breaking those signals out externally is a better solution.
-
-It is important to note that the Spork allows for reverse engineering of both the network card and the UPS. One of the most important capabilities will be to emulate the UPS, in order to analyse the behaviour of the Network-MS card so that it can be replicated for interoperability.
-
-Spork is made up of two identical PCBs connected via standard Cat5/6 network cables. One board plugs into the UPS, passing the signals out through the RJ45 connectors. The original face plate from the network card is attached to this board, to provide mechanical strength. The other board breaks out the signals and provides a card edge slot for the original network card to plug into.
-
-Spork will provide the following breakout options:
-
-- Wire loops for connecting scope probes.
-- 2x10 header (both pins connected) for convenient breakout.
-- 2x10 header (jumpers separating board connections and RJ45 connectors) for in-place signal tampering and optional signal disconnection.
-
-Here's an overview of the card layout:
-
-![spork_overview_diagram](docs/images/spork_overview_diagram.png)
-
-While the older Network-MS card interface has only 6 pins, which could be transported over just one cable, the newer Network-M2 card has 10 pins (5 per side) on the same card-edge form factor. The cost and inconvenience of using two cables is far outweighed by the benefit of having a design that works with newer cards as well as older ones.
-
-Using just 5 signals per cable has some advantages, too. The swapped pair (see DB in the [TIA-568 Wikipedia article](https://en.wikipedia.org/wiki/ANSI/TIA-568#Wiring)) doesn't need to be accounted for, since we can just use the DA, DC, and DD pairs. Signal referencing can be improved with some basic preliminary reverse engineering, to identify the ground and power lines and ensure that they are coupled with signal lines where possible.
-
-#### Reverse engineering questions
-
-- [ ] What's the pinout of the card edge connector?
-- [ ] What voltage(s) are provided? 5V expected since LT1507 buck regulator is present.
-- [ ] What's the physical layer for communications? 3.3V UART seems likely.
-- [ ] What's the transport layer? Modbus Serial RTU seems likely since the card was made by Schneider Electric. JBUS is also a possibility since it is mentioned in docs.
+See the [Spork documentation](spork.md) for more information.
 
 #### Status
 
 As of 2021-05-21, a draft version of the Spork PCB has been designed, and it is expected to be sent for manufacturing within the next week.
 
-Some initial investigation into the Network-MS card has been done. The firmware appears to be based on Digi NET+OS. A [firmware header parsing script](tools/netos_firmware_header_parser.linq) has been created to extract some information about the firmware update files. The data in the files appears to be compressed or otherwise encoded, though, so I haven't managed to reverse engineer any of the ARM7 stuff out of them yet. The documentation mentions LZSS, LZSS2, and LZ77, but the flags in the header _seem_ to indicate that the data isn't actually compressed. However, I'm making that assumption based on the idea that the `BL_WRITE_TO_FLASH`, `BL_LZSS_COMPRESSED`, `BL_LZSS2_COMPRESSED`, etc. flags are sequential, which probably isn't correct - sadly I can't get hold of the NET+OS source or BSPs to confirm this. Efforts to decompress the payloads has yet to yield any results.
+Some initial investigation into the Network-MS card has been done.
 
 ### Chopstick
 
@@ -241,5 +184,47 @@ The version roadmap is as follows:
 - **0.3.x** to **0.9.x** - Feature support expansion.
 - **1.0.x** and beyond - Complete base feature set implemented.
 
+## Documentation
 
+- [Reverse engineering](docs/reverse-engineering/reversing.md)
+- [Spork](docs/spork/spork.md) (interposer board)
 
+## Test Hardware
+
+The following hardware is being used for development.
+
+### UPS products
+
+- MGE Pulsar Evolution 3000 UPS
+
+### Network cards
+
+- Eaton Network-MS Card
+  - Thought to be technical level 06 or 07.
+  - Thought to be card revision FA.
+  - Part number: `710-00255-06P`
+  - Front silkscreen: `CARTE NMC1 34003816XD_1FA`
+  - Rear silkscreen: `CARTE NMC1 34003816XD_6FA`
+- MGE 66102 Card
+  - Too early a hardware revision for the Pulsar Evolution 3000, so mostly being used as a hardware reference.
+  - Technical level 03.
+  - Card revision CA.
+  - P/N ???? (need to dig the card out to check)
+  - Front silkscreen `CARTE NMC1 34003816XD_1CA`
+  - Rear silkscreen `CARTE NMC1 34003816XD_6CA`
+
+### Expanding coverage
+
+If you have an Eaton UPS and a Network-MS card, and would like to help out, please get in touch. Dumping the card IO while browsing through the web panel can provide a ton of insight into how various features work.
+
+If you wish to donate a Network-MS or Network-M2 card of any technical level, please let me know. Higher technical levels are preferred; a revision JA (technical level 17) Network-MS card would help a lot. I'd also be interested if you want to sell a card, as long as it's a significantly later technical level than I already have.
+
+If you happen to have an older UPS that's supported by a technical level 06 card (check section 1.2.1 of the [Network-MS user guide](docs/eaton-network-card-ms-user-guide-manual.pdf) for a full list), but are using a more modern Network-MS card - i.e. technical level 08 or higher - please consider swapping your card with mine to help out this project. I can offer some compensation if needed.
+
+## License
+
+The hardware design files and software files are released under MIT license.
+
+Firmware files, documents, and other materials from MGE and Eaton are provided here for convenient reference only, and are not released under any license. If you are an employee or representative of Eaton and you have questions or concerns about the content distributed here, please open up a GitHub issue, or privately contact me at *{my github username at gmail*}.
+
+Datasheets and other documentation from third parties are provided here for convenient reference only, and are not released under any license.
