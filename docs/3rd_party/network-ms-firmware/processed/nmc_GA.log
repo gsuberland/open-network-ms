@@ -1,0 +1,12 @@
+File size: 1349584 (0x001497D0) bytes
+Complete header size: 0x24 (36 bytes)
+NET-OS header size: 0x24 (36 bytes)
+NET-OS signature: bootHdr
+NET-OS version: <7.4 (0x0002)
+Flags: BL_WRITE_TO_FLASH, BL_LZSS2_COMPRESSED
+Flash address: 0x00010000
+RAM address: 0x08004000
+Image size: 0x001497A8
+Seeking to data at offset 0x36
+File is LZSS2 compressed. Decompressing...
+Expanded 1349584 bytes to 2419169 bytes.

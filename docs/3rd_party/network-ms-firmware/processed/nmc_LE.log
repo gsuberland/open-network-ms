@@ -1,0 +1,31 @@
+File size: 2248825 (0x00225079) bytes
+Complete header size: 0x5C (92 bytes)
+NET-OS header size: 0x5C (92 bytes)
+NET-OS signature: NmcKA  
+Warning: signature is not default 'bootHdr', loader may be customised.
+NET-OS version: 7.5
+Flags: BL_WRITE_TO_FLASH, BL_LZSS2_COMPRESSED
+Flash address: 0x00020000
+RAM address: 0x00004000
+Image size: 0x00225019
+Backup address: 0x02000000
+Platform count: 2
+Platform 1:
+    (raw value): 0x8C020010
+    Minimum RAM: 16MB
+    Hardware Revision: 0 (A)
+    Processor: NS7520 (0x02)
+    Board Type: CONNECTSP (0x0C)
+Platform 2:
+    (raw value): 0x8C020010
+    Minimum RAM: 16MB
+    Hardware Revision: 0 (A)
+    Processor: NS7520 (0x02)
+    Board Type: CONNECTSP (0x0C)
+Reserved1: 0x00000000
+Reserved2: 0x00000000
+Reserved3: 0x00000000
+Reserved4: 0x00000000
+Seeking to data at offset 0x92
+File is LZSS2 compressed. Decompressing...
+Expanded 2248825 bytes to 4236170 bytes.

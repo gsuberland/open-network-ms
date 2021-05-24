@@ -1,0 +1,13 @@
+File size: 1901076 (0x001D0214) bytes
+Complete header size: 0x24 (36 bytes)
+NET-OS header size: 0x24 (36 bytes)
+NET-OS signature: Nmc55Hd
+Warning: signature is not default 'bootHdr', loader may be customised.
+NET-OS version: <7.4 (0x0003)
+Flags: BL_WRITE_TO_FLASH, BL_LZSS2_COMPRESSED
+Flash address: 0x00010000
+RAM address: 0x08004000
+Image size: 0x001D01EC
+Seeking to data at offset 0x36
+File is LZSS2 compressed. Decompressing...
+Expanded 1901076 bytes to 3471920 bytes.
