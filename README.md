@@ -54,7 +54,7 @@ There are four primary phases to the project:
 
 Spork is an interposer that sits between a real network card and the UPS, making it easier to hook into the electrical signals with an oscilloscope or other test equipment. It has no functionality of its own - it is simply an electrical pass-through with test points.
 
-See the [Spork documentation](spork.md) for more information.
+See the [Spork documentation](docs/spork/spork.md) for more information.
 
 #### Status
 
