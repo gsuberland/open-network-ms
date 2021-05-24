@@ -1,0 +1,1249 @@
+================================================================================
+Release note for Network-MS Card (Ex NMC 66102).
+Firmware : Release JA
+Date     : 2013/02/19  (yyyy/mm/dd)
+Eaton (c) 2013
+================================================================================
+
+
+
+====================================English=====================================
+
+Upgrade/Compatibility:
+   This section describes the procedure in order to upgrade from a previous release.
+   The criterias to know the procedure are the Card Technical Level and Card Revision
+   shown on the page 'About your UPS'.
+   - From Card Technical Level 01, 02, 03: The last compatible release is EE.
+   - From Card Technical Level 04, 05, 06, 07: The last compatible release is GE.
+     Upgrade to new release must be done with following steps: 
+      Upgrade to EC
+      Upgrade to FA
+      Upgrade to GB
+      Upgrade to GE
+   - Card Technical Level 08: The last compatible release is GE.
+     Upgrade to new release must be done with Following steps: 
+      Upgrade to GB
+      Upgrade to GE
+   - Card Technical Level 09 (Card Revision FB): The last compatible release is GE.
+     Upgrade to new release must be done with Following steps: 
+      Upgrade to GB 
+      Upgrade to GE
+   - Card Technical Level 09 (Card Revision GA): The last compatible release is HF. 
+     Upgrade to new release must be done with Following steps: 
+      Upgrade to GB
+      Upgrade to HB
+   - Card Technical Level 13 (Card Revision HA): The last compatible release is HF.      
+   - Card Technical Level 17 (Card Revision JA): The last compatible release is JA.      
+
+   Note: Release EE, FA, GB, GE, HB and HF are available at url:
+   http://download.mgeops.com/emb/htm/firmware_en.htm
+
+Note:
+    A release JA can be downgrade in release HF, but the release HF will no longer 
+    be upgraded in release JA.
+    
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release JA
+                              ==================
+
+New features:
+   - Add external Authentication&Authorization: Radius and LDAP.
+   - Generate a SSL certificate with a 1024 bits key.
+   - SNMP and Trap ports are configurable.
+   - SMTP port is configurable. 
+   - Improve the startup speed of the card.
+   - Identify the CPU of the card: 36 or 55 MHz.
+   - New title for Web pages.
+   - Extended ASCII characters are authorized in SNMP mode.  
+   - Possibility to set the Shutdown duration to a value less than 120.
+   - Compatibility with 8 new models : Eaton 5P 550, Eaton 5P 650, Eaton 5P 750, 
+     Eaton 5P 850, Eaton 5P 1000, Eaton 5P 1150, Eaton 5P 1500, Eaton 5P 1550
+   - Compatibility with 15 new models : Eaton 93PM 50, 100, 150, 200, 250, 300, 
+     350, 400, 450, 500, 550, 600, 650, 700 and 750.
+   - Compatibility with 3 new models : Eaton 9PX 6000 SP, Eaton 9PX 8000 SP,
+     Eaton 9PX 10000 SP.   
+   - Compatibility with 3 new models : Eaton 9PX 6000i 3:1, Eaton 9PX 8000i 3:1,
+     Eaton 9PX 11000i 3:1.   
+
+Improvements:
+   - Update (GMT) Time zone Russian
+   - Protection against XSS vulnerability.
+
+Fixed Issues:
+   - CZI for Czech in NMC is not valid, replaced by CZE.
+   - Some objects cannot be written in the Mib-2.
+   - The Shutdown Test from the Notified Application is not working sometimes.
+
+Known Issues:
+   - Setup 0 into the Shutdown Duration parameter in the Web pages produces a
+     communication lost with the IPP v1.28 and previous. 
+     The workaround is to setup this value to 1.
+
+
+
+                              ==================
+                                  Release HF
+                              ==================
+
+New features:
+   - Compatibility with Eaton 9P.
+   - Compatibility with some new models Eaton 9E.
+   - Compatibility with Eaton 5P, 9SX and 9PX single phase.
+   - NMC retrieves the power usage data managed by the UPS,
+     they are returned in new Oid in the Eaton PowerMIB for UPS and
+	 in the Power Usage new web page.
+
+Improvements:
+   - Synchronize date and time between NMC and Eaton applications immediately when this option
+     is saved in the web interface. Before it could take up to 30 minutes.
+   - Add a workaround to accept the not well formatted SHUT answer from UPS Pulsar MX
+     and avoid the state bind error on maintenance port, that could make the NMC restart.
+   - The SSL certificate is now recorded in flash. Without any change of the IP 
+     address, there is no computation at each restart.
+   - The name of the SSL certificate has been updated "EATON Network MS - ".
+   - Two new alarms are managed : "Battery fuse blown" and "Rectifier fuse blown".
+
+Fixed Issues:
+   - With UPS 9130, Fixes the confusion of High Efficiency mode with Bypass auto.
+   - Fix the Telnet menu list numbering.
+   - In the Eaton PowerMIB for UPS, fix the consistency issue in between the number
+     of alarms and the list of alarms.
+   - With UPS 9130, initiate a Master shutdown in the same time than the last
+     load segments shutdown.
+   - Fix a few translation issues or erroneous labels.
+   - Fix SNMP answer with source address missing or bad address provided by IPv6 router
+     when the NMC is configured with IPv6 static.
+   - Fix CLI starts with an error displayed at each connection.
+   - The web interface Clear Log feature needs now to login.
+   - Switch off after and Switch on after parameters are now synchronized in between 
+     SNMP and Web interface.
+   - Fix some wrong information on NMS in Notified applications web page.
+   - Fix on the Measurements logs page, the issue where some logs are missing sometime.
+   - Fix the missing Ethernet link switch On that could happen when plugin the Ethernet
+     cable during the initialization.
+   - Fixes the issue where the unit of Temperature were in deg.K in get_object.xml,
+     they are now in deg.C.
+   - Fix the issue of bad state of the Sensor contact in the Eaton PowerMIB for UPS.
+   - In the Eaton PowerMIB for UPS, a wrong value could be returned to the Oid
+     .1.3.6.1.4.1.534.1.3.4.1.3 
+     It is fixed by returning value 0 for unexpected objects.
+   - Fix the Impossibility to save the log measures for 3 phase UPS.
+
+
+
+                              ==================
+                                  Release HE
+                              ==================
+
+New features:
+   - Compatibility with Eaton 9E
+
+Known issues:
+   - With IPM 1.14, it is not possible to proceed to the mass upgrade of 
+     NMC / HD firmware. It will be possible with IPM 1.20.  
+
+
+                              ==================
+                                  Release HD
+                              ==================
+
+Fixed Issues:
+   - NMC / HD firmware is compatible with Netwatch shutdown software 
+    (UDP alarms are correctly sent)
+   - NMC / HD firmware is compatible with next version of IPP 1.20 
+    (UDP alarms are correctly sent) 
+   - New features in the NMC card HELP have been described. 
+   
+   
+Known issues:
+   - With IPM 1.14, it is not possible to proceed to the mass upgrade of 
+     NMC / HD firmware. It will be possible with IPM 1.20.
+     
+
+                              ==================
+                                  Release HC
+                              ==================
+
+New features:
+   - Add TELNET/SSH/CLI features.
+   - Taking into account the compatibility with Eaton 5PX.
+   - Adding new measures in the Web page "UPS Properties Status" concerning
+     the hour average consumption.
+   - Adding new object (@IPv4, @IPv6, @MAC, version) to display on UPS
+     embedded LCD.
+   - Czech added.
+
+Improvements:
+   - Adding new encrypted authentication with challenge HMAC-SHA-1 to resolve 
+     unsecured access.
+
+Fixed Issues:
+   - Updating of the translation.
+   - Replacing NSM by IPP and EPM by IPM
+   
+Known issues:
+   - NMC / HC firmware is not compatible with Netwatch shutdown software
+    (For Netwatch, please keep HB revision or wait for HD Firmware)
+   - IPP 1.20 will be in communication lost with NMC / HC (UDP alarms missing)
+   - Missing some new features in the NMC card HELP.
+   
+
+                                                        
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release HB
+                              ==================
+                                                        
+New features:
+   - Add a rescue menu at card startup where it's possible to factory reset the card.
+   - Integrate the recognition of PANDA UPS : Eaton 9E 30 and Eaton 9E 60.
+   
+Improvements:
+   - Does not serve UPS data in GET_OBJECT.xml until the 1st round of polling is finished.
+   - Date of SSL certificate.
+   - Port of Powerware XUPS MIB improvements.
+
+Fixed Issues:
+   - Fix the issue where the SNMP data upsConfigLowBattTime returns a bad value.
+   - Fix the issue with UPS 9130 where the switchoff after is 0 for load segments.
+   - Fix the issue where the IP address were lost after some restart.
+
+Known issues:
+   - At the first start of the card, the IPv6 mode is enabled. This configuration does not
+   inhibit card access on IPv4 address.
+
+
+--------------------------------------------------------------------------------
+   
+                              ==================
+                                  Release HA
+                              ==================
+                                                        
+New features:
+   - IPv6 compliant (autoconfiguration mode only).
+   - SNMPv3 compliant. Two users can be defined, one in read-only mode, and one in read/write mode.
+   - Three traps of MIB IETF UPS are managed: upsTrapOnBattery, upsTrapAlarmEntryAdded, and 
+   upsTrapAlarmEntryRemoved.   
+   
+Fixed Issues:
+   - The e-mail test is not sent when selected recepient is disabled.
+   
+Known issues:
+   - At the first start of the card, the IPv6 mode is enabled. This configuration does not
+   inhibit card access on IPv4 address.
+   - Under IE7 and IE8 browsers, the action on button "Save log" in Measurements,
+   Event and System logs, does not open a popup window that allows to save the file,
+   but diplays it directly in the browser.
+   -> Workaround: Select File/Save as... in the browser menu.
+
+--------------------------------------------------------------------------------  
+
+                              ==================
+                                  Release GE
+                              ==================                                                      
+   
+Improvements:
+   - No redirection to UPS Properties page on card Reset from System Settings.
+   - Notified applications are limited to 3 Network Management System.   
+   - Add the possibility to configure the timezones defined on half hour for specific locations. 
+   - Add filter for notified values to not overflow the message queue used to send
+   notifications to NSM (or IPP). (Message "Queue full" issue).
+      
+Fixed Issues:
+   - Fix the bad shutdown sequence on controlled outlet when the Master Shutdown Timer is
+   lower than outlets ones.
+   - Saving logs is available even if QuickTime is installed on computer.
+   - In Shutdown Parameters page, the Switch Off After field of Load Segments is controlled
+   to be higher than the Shutdown Duration.
+   - The Network Management System platforms are no longer lost after a reset.
+   - Good display of bargraph temperature and some Web pages in Internet Explorer when card
+   is configured in Japanese.
+   - Good display of event log messages when card is configured in Russian.
+   - Reset of all the values of Shutdown Parameters page on Factory Reset.
+   - Fix the card crashes, involving a reset, on specific sequence of GET SNMP commands
+   (Issue identified with HPOpenView).
+   
+Known issues:
+   - Under IE7 and IE8 browsers, the action on button "Save log" in Measurements,
+   Event and System logs, does not open a popup window that allows to save the file,
+   but diplays it directly in the browser.
+   -> Workaround: Select File/Save as... in the browser menu.
+            
+--------------------------------------------------------------------------------
+   
+                              ==================
+                                  Release GD
+                              ==================
+
+Fixed issues:
+   - Fix the issue on SNMP : Now the names of community Read-Only and community Write can be the same.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release GC
+                              ==================
+
+New features:
+   - Add 5 new languages: Japanese, Chinese traditional, Chinese simplified, Korean, Russian.
+   - Integration of Eaton Powerware MIB for UPS, including traps.
+   - SNMP write implemented (disabled by default, it can be enabled into the page 'Access Control').
+     Read/Write data of IETF MIB and Eaton Powerware MIB can now be written.
+   - Compatibility with Lansafe and Shutdown commands from Lansafe. (Minimal Lansafe version: 6.0.3)
+
+Improvements:
+   - The change of SNMP parameters in the Web interface are applied now without restarting
+     the card.
+
+Fixed issues:
+   - Fix the abnormal battery level bargraph when the battery capacity is below 10 %
+
+Known issues:
+   - The SNMP community Read and Write must be different.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release GB
+                              ==================
+                   
+Improvements:
+   - Requires Login authentication for direct access to POST method on HTML pages.
+   - Delete the configuration file in RAM so that increases security.
+
+
+Fixed issue:
+   - Increase upload buffer size to upgrade NMC with GC release. 
+   - Restart the card by detection of SHUT desynchronisation (fix a customer site issue).
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release GA
+                              ==================
+
+New features:
+   - UPS data acquisition through the XCP protocol (in addition to the existing
+     SHUT protocol).
+	 The NMC is now compliant with the following Powerware UPSs:  9120, 9130 and
+     9170+ (tested on a Split Phase configuration with 1 and 2 Power Modules).
+   - Manages the IETF MIB for UPS (RFC1628).
+   - Access the NTP server later when it is not reachable at initialisation time. 
+
+Improvements:
+   - The Factory Reset operation sets now the IP address to 192.168.1.2 that is applied
+     at card restart time when the DHCP mode is not selected or when the DHCP server
+     is not available.
+
+Fixed issues:
+   - The change of SNMP Read Community name in the Web interface is now taken
+     into account.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release FA
+                              ==================
+                              
+Note:
+   - This FA firmware release can only be upgraded from the EC release. If the original firmware
+     has an older revision, the EC release must be upgraded first.
+   - Card settings are lost after FA upgrading, only IP configuration is kept.
+   - FA release is compatible with NMC cards that have a Technical Level superior or equal to 04.
+   
+New features:
+   - The e-mail format is compatible with eNotify (Eaton Powerware remote service center).
+     The card can be configured through the network with the latest version of the eNotify wizard.
+   - Compatibility with SMTP servers that require authentication.
+   
+Improvements:
+   - Latest revision of TCP/IP stack (Digi NetOS 7.3) is integrated in order to improve security
+     and response time with HTTP/HTTPS services. 
+   - IP address conflict detection.
+   - The csv log files DATA_UPS.csv, DATA_UPS_PW.csv, EVENT_SYSTEM.CSV, EVENT_UPS.CSV order
+     is modified to be compatible with the eNotify system: the oldest date/time stamp is at the
+     top of the .csv file.
+   - The access to the FLASH file system through HTTP is protected by login/password.
+   - Compatible with new UPS names after Eaton rebranding.
+   - The subdirectory 'mgeups' is suppressed from the url path.
+   - When the card is configured in NTP mode, and the NTP server is not available, the automatic
+     switch to NSM/EPM time synchronisation is not performed.
+   - Possibility to configure SMTP and NTP servers with their IP address when the DNS service is 
+     not configured.
+   - In Serial Maintenance Menu, the Factory Reset operation resets also the IP settings to their
+     default factory values.
+                   
+Fixed issues:
+   - The NMS trap receivers are removed from the Configuration Data file when they are
+     suppressed from the web page or from the Set Object function.
+   - Logs and notifications have the same unit as the selected temperature unit: °C or °F.
+   - In System Settings page, "Keep TCP/IP parameters" checkbox is now taken into account, 
+     and the Reset is now performed after a click on "Factory Reset".
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EE
+                              ==================
+
+New features:
+   - Add "MGEUPS" for default login/password.
+   
+Improuvements: 
+   - Reinitialize the card after the detection of 5 consecutive desynchronisation
+   errors of UPS communication.
+   - Requires login/password authentication for direct access to POST method on HTML
+   pages.
+   - Reinitialize the card after 10 errors that generate "Queue full" message.
+   
+Corrected issues:
+   - The card initialises correctly when the UPS starts on Battery.
+   - Accept user's message longer than 80 characters via Web interface.
+   - Reinitialize the card after an action on "Factory Reset" button in System Settings page. 
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EC
+                              ==================
+                   
+Fixed issue:
+   - Increase upload buffer size to upgrade NMC with FA release. 
+
+Known issues:
+   - Logs and notifications may have a different unit as the selected temperature unit: °C or °F.
+   - The NMS trap receivers are not removed from the Configuration Data file when they are
+     suppressed from the web page or from the Set Object function. So they reappear after
+     a Reset.
+   - In System Settings page, "Keep TCP/IP parameters" checkbox is not taken into account, 
+     and the Reset is not performed after a click on "Factory Reset".
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EB
+                              ==================
+
+New features : 
+   - The logo 'MGE OFFICE PROTECTION SYSTEMS' is completed with 'An Eaton Brand'.
+   - The access to XML objects is indicated as FORM rather than RAW in the file product.xml.
+   - New UPS Eaton Powerware 5125 and 9135 are now supported.
+   - The Logo Eaton Powerware now appears for these new UPS.
+   - Up to 3 NMS (instead 1) are now managed into the XML parameter file.
+   - The welcome text 'EATON' replaces 'MGE OFFICE PROTECTION SYSTEMS' in the
+     maintenance dialog.
+   - The "blue" Eaton Look & Feel is unified for both brand Powerware and
+     MGE Office Protection Systems.
+
+Improvements:
+   - The address of server DHCP who served the card is saved into Flash, allowing
+     that the same server DHCP will serve the card when the card restarts.
+	   This modification had been suppressed by error in the modication from DB to EA.
+   - Offset of humidity and temperature can be negative by mass settings function.
+   - The index is suppressed in page to add or modify NMS.
+   - Some characters converted from ISO to UTF-8.
+   - In page Sensor Settings, fix bad advanced settings behavior when language is not english.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EA 		 
+                              ==================
+
+New features : 
+   - The default Login/Password is now admin/admin .
+   - The new function Mass Setting is integrated allowing to set each parameter
+     individually available through HTTP protocol.
+   - The card restarts automatically when the network parameters are changed or
+     when the Factory Reset is applied.
+   - One unique file ConfigurationData.xml containing all the parameters is
+     replacing the old .cfg files.
+   - The functions Upload/Download are suppressed from the HTML setting pages.
+   - All the HTML pages and string parameters support now the UTF-8 coding system.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release DA 		 
+                              ==================
+
+New features:
+  - Compatibilty with the following UPSs:
+    - EX 5 / 7 / 11 RT (with minislot [Q2 08])
+  - User Interface with MGE Office Protection Systems look & feel
+
+
+Improvements:
+  - Increase of the supported NSM number:
+    - 35 in TCP connected mode or
+    - 100 in UDP not connected mode or
+    - mixed mode: 20 connected and 50 not connected.
+  - The security level of Access Settings parameters is improved.
+  - Time is updated by the NSM V3.10 which are on the same network,
+    even if they are not connected to the card.
+
+
+Fixed issue:
+  - Correction of "get_object.xml" request that allows the display of synoptic 
+    values in EPM V2.08.
+  
+
+Known issue:	
+  - Controlled output management on Pulsar MX 4 / 5 kVA: 
+    The temporisation "Restart after" is not taken into account 
+    => The output restarts immediately (UPS issue).
+    Corrected until revision V05 of UPS firmware.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release CB 		 
+                              ==================
+
+Fixed issues:
+  - Compatibility with new Flash component for NMC Card revision DA.
+
+Known issues:	
+  - Controlled output management on Pulsar MX 4 / 5 kVa revision V04 : The temporisation "Restart after" 
+    is not taken into account => The output restart immediately (UPS issue).
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release CA 		 
+                              ==================
+
+New features:
+  - Animated synoptic on the Web interface : "UPS properties" page
+  - UPS measurements available when the pointer hoved the synoptic
+  - Compatibilty with the following UPS :
+    - Pulsar MX 4 / 5 / 10 kVA
+    - Pulsar MX Frame 15 / 20 kVA
+  - Supervision of modular UPS : Status and defaults available for the system and also for each module
+  - Supervision of three phases UPS : Three phases measurements in logs and on the synoptic
+  - Smart shutdown management for UPS with 2 NMC Cards
+	
+Improvements:
+  - Additional SNMP objects in the compact MGE MIB. Three phases measurments objects are now available.
+  - Additional SNMP objects in the IETF MIB.
+    - upsOutputCurrent     33.1.3.3.1.3.1
+    - upsOutputVoltage     33.1.4.4.1.2.1
+    - upsOutputPercentLoad 33.1.4.4.1.5.1
+  - Additional special TRAP to manage protection lost
+    - Trap 67: upsmgProtectionLost
+    - Trap 68: upsmgProtectionOK
+  - Protection (lost and recovered) events added in the e-mail list notification
+  - Logs reset (Measurements, Event Log, System Log, Environment) when the factory reset is launched
+  - New Look & Feel Web interface same as EPM Look & Feel
+  - Synchronization with NTP server every 5 min instead of 24 hours
+
+Fixed issues:
+  - Logs sturdiness improvement
+  - E-mail address for notification can contain up to 99 characters instead of 49 previously
+
+Known issues:	
+  - Controlled output management on Pulsar MX 4 / 5 kVA : The temporisation "Restart after" 
+    is not taken into account => The output restart immediately (UPS issue).
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release BA 		 
+                              ==================
+
+New features:
+
+	- NSM V3.x and V2.6 compatibility
+	- MUPGRADE compatibilty for Discovery function (installation tool)
+	- Quick scan compatibility with EPM (from V2.05)
+	- Time : New option - Automatic time management through EPM V2 or NSMV3
+	- Pulsar MX (equiped of V04L fw system frame)
+		- Detection and display of redundant 1+1 configuration on each UPS card
+		- Notification by e-mail and TRAP of the loss and return of the redudance statement 
+		- One single UPS time management (card + UPS) and automatic update via Network
+	- New option to limit Ethernet speed to 10 Mbit (via RS232 Settings port only)
+	
+Improvements:
+	- Upload performances (reliability and delay) increased - Automatic restart implemented
+	- Starting time improved after click on "Reset communication" in "System" page
+	- Access to RS232 settings menu without any network cable connection
+	- Continuous access to RS232 settings menu after Environment Sensor connection/disconnection 
+	- Automatic detection of Web browser language.
+	- Additional SNMP objects in the compact MGE MIB.
+		- upsmgInputLineFailCause
+		- upsmgOutputInverterOff
+		- upsmgOutputOverTemp
+	- Additional special TRAP to manage redundancy configuration
+		- Trap 65 : upsmgRedundancyLost
+		- Trap 66 : upsmgRedundancyOK
+	- Redundancy lost and recovered  objects added in the e-mail list notification
+	- RS232 settings menus simplification
+	- Sensor and switchable outlets information available for EPM display
+	- Graphical behavior change in the UPS Control page when ON commands selected
+	- Additional information in the "About your UPS" page
+
+Limitation:
+	- 35 NSM max (V3.X and/or V2.x) can be connected to the same card (SSL not activated)
+	- less than 10 NSM (V3.X and/or V2.x) can be connected to a card configured with SSL option
+	- The NMC MiniSlot 2006 Edition is not compatible with UM-clients.
+	- Pulsar MX Frame:
+		- Warning! : Contact your technical support to use 2 "Network Management Card" MiniSlot 2006 Edition.
+		- No specific UPS picture on "UPS properties" web page (Generic UPS picture).
+		- Three phases measurements not available for monitoring on Enterprise Power Management and on MGE MIB.
+		- Modules specific informations not available.
+	
+Fixed issues:
+	- Shutdown risk for systems protected by NSM after a run on 
+	  battery less than 20 sec
+	- Frequent failures during new firmware upload 
+    	- Settings loss after card restartin
+	- Shutdown during card start up if the "battery capacity under" parameter is
+	  lower than the real battery level.
+	- Display issue of "°C" with Mozilla FireFox 1.5 browser in the "Status" 
+	  page of the Environment Sensor menu
+	- Wrong time management with Pulsar MX
+	- Text change in the "Time" page, "Daylight Savings Time" replaced by "European Daylight Savings Time"
+
+Known issues:
+	- If the "UPS location" field within the "System" item is bigger than 20 characters 
+	then MUPGRADE troubleshooting can appeared after clicking on Discovery button.
+	To avoid this it is highly recommended to not enter more than 20 characters in this field.
+
+--------------------------------------------------------------------------------
+
+                                ==================
+                                    Release AA 		 
+                              	==================
+
+	- Initial release.
+
+Known issues:
+	- With Evolution 2200 and 3000 products, the "Save power down" and "Delayed, 
+	save power down" commands in the "UPS Control" page are not operational.
+	- No shutdown at card start up, if the "battery capacity under" is lower than 
+	the real battery level. The shutdown is carried out by UPS when the battery 
+	level is lower than 20% or 30% (depends on UPS internal configuration).
+	- If the Environment Sensor is connected to the NMC MiniSlot 2006 Edition 
+	the EPM V1.2 does not update the UPS outlets' state.
+	- In the "Status" page of the Environment Sensor: display problem of "°C" 
+	with Mozilla FireFox 1.5 browser.
+	
+Limitation:
+	- In SSL mode, up to 35 NSM clients max. can be connected.
+
+Important note:
+	- The NMC MiniSlot 2006 Edition is not compatible with UM-clients.
+	- The NMC MiniSlot 2006 Edition is not compatible with Mupgrade.
+   
+ 
+====================================Français====================================
+
+Mise à jour/Compatibilité :
+   Ce paragraphe décrit la procédure de mise à jour du firmware en fonction du niveau
+   technique et de l'indice de la carte affichés sur la page 'A propos de l'onduleur'.
+   - Du niveau technique 01, 02, 03 : La dernière release compatible est la EE.
+   - Du niveau technique 04, 05, 06, 07 : La dernière release compatible est la GE. 
+     Suivre les étapes de mise à jour suivantes :
+      Mise à jour vers EE
+      Mise à jour vers FA
+      Mise à jour vers GB
+      Mise à jour vers GE
+   - Du niveau technique 08 : La dernière release compatible est la GE.
+     Suivre les étapes de mise à jour suivantes :
+      Mise à jour vers GB
+      Mise à jour vers GE
+   - Du niveau technique 09 (Indice carte FB) : La dernière release compatible est la GE.
+     Suivre les étapes de mise à jour suivantes :
+      Mise à jour vers GB
+      Mise à jour vers GE
+   - Du niveau technique 09 (Indice carte GA) La dernière release compatible est la HF.
+     Suivre les étapes de mise à jour suivantes :
+      Mise à jour vers GB
+      Mise à jour vers HB
+   - Du niveau technique 13 (Indice carte HA) La dernière release compatible est la HF.
+   
+   Note : Les Release EE, FA, GB, GE, HB et HF sont disponibles sous l'url :
+   http://download.mgeops.com/emb/htm/firmware_fr.htm
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release HF
+                              ==================
+
+   - Prise en charge des onduleurs Eaton 9P.
+   - Prise en charge de nouveaux modèles de la gamme d'onduleur Eaton 9E.
+   - Prise en charge des onduleurs Eaton 5P, 9SX et 9PX monophasés.
+   - La carte acquiert les mesures d'énergie produites par les onduleurs,
+     qui sont retournées par de nouveaux Oid dans la MIB Eaton PowerMIB for UPS et
+	 dans la page web des mesures d'énergie.
+
+Améliorations:
+   - Synchronise la date et l'heure avec les applications Eaton immédiatement après que cette
+     option ait été sauvée dans l'interface web. Avant cela pouvait prendre jusqu'à 30 minutes.
+   - Ajout d'un workaround pour accepter des trames SHUT incorrectement formatées an provenance
+     d'un UPS Pulsar MX, et éviter l'error state bind sur le port de maintenance, qui
+	 pouvait faire redémarrer la carte.
+   - Le certificat SSL est maintenant sauvegardé en Flash. Sans changement de l'adresse IP, il 
+     n'est pas recalculé à chaque démarrage.
+   - Le nom du certificat SSL a été changé en "EATON Network MS - ".
+   - Deux nouvelles alarmes sont gérées : "Défaut fusible batterie" et "Défaut fusible redresseur".
+     
+Problèmes corrigés:
+   - Avec l'onduleur 9130, corrige la confusion du High Efficiency mode avec le mode Bypass auto.
+   - Corrige la numérotation du menu Telnet.
+   - Dans la MIB Eaton PowerMIB pour UPS, corrige l'incohérence entre le nombre d'alarmes et la
+     liste des alarmes.
+   - Avec l'onduleur 9130, enclenche le Master shutdown de façon synchronisée avec le shutdown
+     du dernier load segment.
+   - Corrige des labels erronés.
+   - Corrige la réponse SNMP avec une adresse IP manquante ou mauvaise fournie par un routeur
+     IPv6 quand la carte est configurée en IPv6 static.
+   - Corrige le démarrage de CLI avec une erreur au début de chaque connexion.
+   - La fonction d'effacement sur la page des historique mesures demande le login/password.
+   - Les paramètres Arrêt après et Démarrage après sont maintenant synchronisés entre SNMP et
+     l'interface web.
+   - Corrige de fausses informations dans la page web Applications Notifiées.
+   - Corrige les lignes manquantes dans l'historique des mesures.
+   - Corrige la non détection du lien Ethernet, problème qui pouvait éventuellement arriver en
+     connectant le câble Ethernet durant l'initialisation.
+   - Corrige l'erreur d'unité des degrés K dans get_object.xml, ils sont exprimés en degrés C.
+   - Corrige l'inversion d'état du contact Sensor dans la MIB Eaton PowerMIB pour UPS.
+   - Dans la MIB Eaton PowerMIB pour UPS, une fausse valeur pouvait être retournée pour l'Oid
+     .1.3.6.1.4.1.534.1.3.4.1.3 
+     La valeur 0 est maintenant retournée pour tout autre donnée non gérée par l'onduleur.
+   - Corrige l'impossibilité de sauver l'historique des mesures d'un UPS triphasé.
+
+
+
+
+                              ==================
+                                  Release HE
+                              ==================
+
+Nouvelles fonctions:
+   - Prise en charge de l'onduleur Eaton 9E.
+
+Problèmes connus:
+   - Avec IPM 1.14 il n'est pas possible de réaliser une opération de mass-upgrade.
+     Cela sera possible avec IPM 1.20.  
+
+
+
+                              ==================
+                                  Release HD
+                              ==================
+
+
+Problèmes corrigés:
+   - Le firmware NMC / HD est compatible avec le logiciel Netwatch 
+    (Les alarmes UDP sont correctement envoyées)
+     Le firmware NMC / HD est compatible avec la prochaine version IPP 1.20 
+    (Les alarmes UDP sont correctement envoyées)
+   - Les nouvelles fonctions dans l'aide de la carte ont été décrites.
+   
+   
+   
+Problèmes connus:
+   - Avec IPM 1.14 il n'est pas possible de réaliser une opération de mass-upgrade.
+     Cela sera possible avec IPM 1.20.
+   
+
+
+                              ==================
+                                  Release HC
+                              ==================
+
+Nouvelles fonctions:
+   - Ajout des fonctionnalités TELNET/SSH/CLI.
+   - Prise en charge de l'onduleur Eaton 5PX.
+   - Ajout de nouvelles mesures concernant la consommation dans la page 
+     "UPS Properties Status".
+   - Ajout de nouveaux objets (@IPv4, @IPv6, @MAC, version) à afficher sur 
+     l'afficheur embarqué de l'UPS.
+   - Ajout de la langue Tchèque.
+
+Améliorations:
+   - Intégration partielle du protocole XML-V4 permettant de résoudre des 
+     failles de sécurité.
+     
+Problèmes corrigés:
+   - Mise à jour des traductions.
+   - Les anciens noms d'application NSM et EPM ont été remplacés par IPP et EPM.
+   
+Problèmes connus:
+   - Le firmware NMC / HC n'est pas compatible avec la prochaine version IPP 1.20
+   - Le firmware NMC / HC n'est pas compatible avec Netwatch 
+     (Avec Netwatch gardez la version HB ou attendez la version HD) 
+     
+   - Quelques pages d'aide ne sont pas à jour.
+                                                        
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release HB
+                              ==================
+                                                        
+Nouvelles fonctions :
+   - Ajout d'un menu au démarrage carte d'ou il est possible de remettre les paramètres par défaut.
+   - Reconnaissance des onduleurs PANDA : Eaton 9E 30 et Eaton 9E 60.
+   
+Améliorations :
+   - Ne renvoie pas les données onduleur dans GET_OBJECT.xml tant que la première
+     boucle de polling n'est pas terminée.
+   - Date du certificat SSL.
+   - Report des améliorations sur la MIB Powerware XUPS.
+
+Problèmes corrigés :
+   - Correction de la donnée SNMP upsConfigLowBattTime retournant une valeur incorrecte.
+   - Correction de la valeur du paramètres Arrêt après à 0 avec l'onduleur 9130.
+   - Correction de la perte de l'adresse IP après un certain nombre de démarrages.
+
+Problèmes connus :
+   - Le mode IPv6 est activé lors du premier démarrage de la carte.
+   Cette configuration n'empêche pas l'accès à la carte avec son adresse IPv4.
+
+
+--------------------------------------------------------------------------------
+   
+                              ==================
+                                  Release HA
+                              ==================
+                                                           
+Nouvelles fonctions :
+   - Supporte le protocole IPv6 (uniquement le mode autoconfiguration). 
+   - Supporte le protocole SNMPv3. Possibilité de créer 2 utilisateurs, un en lecture et
+   un en lecture-écriture.
+   - Trois traps de la MIB IETF UPS sont gérés : upsTrapOnBattery, upsTrapAlarmEntryAdded, et 
+   upsTrapAlarmEntryRemoved.   
+   
+Problèmes corrigés :
+   - Pas d'envoi d'e-mail de test lorsque le destinataire est désactivé.
+   
+Problèmes connus :
+   - Le mode IPv6 est activé lors du premier démarrage de la carte.
+   Cette configuration n'empêche pas l'accès à la carte avec son adresse IPv4.
+   - Avec les navigateurs IE7 et IE8, l'action sur le bouton Enregistrer dans les pages
+   Mesures, Evènements onduleur et Evènements système ne fait pas apparaître la fenêtre
+   permettant de sauvegarder le fichier, mais l'affiche directement dans le navigateur.
+   -> Contournement : Sélectionner Fichier/Enregistrer sous... dans le menu du navigateur.
+
+--------------------------------------------------------------------------------
+   
+                              ==================
+                                  Release GE
+                              ==================                                                          
+   
+Améliorations :
+   - Pas de redirection vers la page Propriété Onduleur lors du redémarrage de la carte
+   à partir de la page Configuration Système. 
+   - Les Applications Notifiées sont limitées à 3 plateformes d'administration réseau. 
+   - Possibilité de configurer un fuseau horaire défini sur la demi-heure pour certain fuseaux horaires. 
+   
+Problèmes corrigés :
+   - Correction de la mauvaise séquence d'arrêt des prises programmables lorsque le champ
+   "Arrêt après" de la prise principale est inférieur à celui des prises programmables. 
+   - La sauvegarde des historiques est possible même si QuickTime est installé sur l'ordinateur.
+   - Dans la page Paramètre d'arrêt, on vérifie que le champ "Arrêt après" des prises
+   programmables est supérieur à la durée d'arrêt avant de le sauvegarder.
+   - Plus de perte des plateformes d'administration réseau après un redémarrage.
+   - Affichage cohérent du barregraphe de la température et de certaines pages web lorsque
+   la carte est configurée en japonais.
+   - Affichage cohérent de l'historique des messages lorsque la carte est configurée en russe. 
+   - L'action sur le bouton "Paramètres par défaut" réinitialise les valeurs de la page
+   Paramètre d'arrêt avec celles par défaut.
+   - Plus d'erreur d'exécution, entrainant un redémarrage, sur une séquence spécifique
+   de GET SNMP (Problème identifié avec HPOpenView).
+   
+Problèmes connus :
+   - Avec les navigateurs IE7 et IE8, l'action sur le bouton Enregistrer dans les pages
+   Mesures, Evènements onduleur et Evènements système ne fait pas apparaître la fenêtre
+   permettant de sauvegarder le fichier, mais l'affiche directement dans le navigateur.
+   -> Contournement : Sélectionner Fichier/Enregistrer sous... dans le menu du navigateur.
+          
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release GD
+                              ==================
+
+Problèmes corrigés :
+   - Correction SNMP : Les noms de communauté en lecture et en écriture peuvent être identiques.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release GC
+                              ==================
+
+Nouvelles fonctions :
+   - Ajout de 5 nouvelles langues : Japonais, Chinois traditionnel, Chinois simplifié, Coréen, Russe.
+   - Intégration de la MIB Eaton Powerware pour les onduleurs, incluant les traps.
+   - Fonction d'écriture SNMP implémentée (inhibée par défaut, elle peut être validée dans la page 'Contrôle d'accès').
+     Les données Read/Write des MIB IETF et MIB Eaton Powerware peuvent être écrites.
+   - Compatibilité avec Lansafe et les commandes d'arrêt provenant de Lansafe.(Version minimale Lansafe 6.0.3)
+
+Améliorations :
+   - Les modifications des paramètres SNMP par l'interface Web ne nécessitent plus le redémarrage de la carte.
+
+Problèmes corrigés :
+   - Bar graphe de niveau batterie anormal quand la capacité batterie est en dessous de 10 %
+
+Problèmes connus :
+   - Les noms de communauté SNMP en Lecture et Ecriture doivent être différents.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release GB
+                              ==================
+                   
+Améliorations :
+   - L'accès direct aux méthodes POST des pages HTML nécessite une authentification par Login.
+   - Effacement du fichier de configuration en RAM pour améliorer la sécurité.
+
+
+Problèmes corrigés :
+   - Augmentation de la taille du buffer de téléchargement afin de pouvoir mettre à jour la NMC
+     avec une version GC.  
+   - Redémarrage de la carte en cas de désynchronisation SHUT (corrige un problème site).
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release GA
+                              ==================
+
+Nouvelles fonctions :
+   - Ajout de l'acquisition onduleur avec le protocole XCP (ajouté à SHUT) qui rend la carte
+     compatible avec les onduleurs Powerware 9120, 9130 et 9170+ (testé en configuration
+     Split Phase, avec 1 et 2 Power Modules).
+   - Ajout des objets de la MIB IETF pour onduleur (RFC 1628).
+   - Accès au serveur NTP effectué après l'initialisation lorsque le serveur n'est pas
+     accessible au démarrage de la carte.
+
+Améliorations :
+   - La fonction Factory Reset règle l'adresse IP à 192.168.1.2, qui est appliquée au
+     démarrage de la carte quand le mode DHCP n'est pas validé ou lorsque le serveur
+     DHCP n'est pas disponible.
+
+Problèmes corrigés :
+   - La modification du nom de communauté SNMP dans la page Web Contrôle d'accès est
+     maintenant prise en compte.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release FA
+                              ==================
+                              
+Note :
+   - Cette version peut être mise à jour uniquement sur une version EC. Pour les anciennes 
+     versions de logiciels, il est nécessaire de télécharger la version EC en premier.
+   - Lors de la mise à jour avec la version FA, les paramètres de configuration de la carte 
+     sont perdus, exceptés les paramètres IP. 
+   - La version FA est compatible avec les cartes NMC dont le Niveau Technique est supérieur
+     ou égal à 4. 
+      
+Nouvelles fonctions :   
+   - Cette version supporte le format e-mail eNotify (Centre de téléservice Eaton Powerware).
+     La carte peut être configurée à travers le réseau par la dernière version de l'assistant
+     eNotify.
+   - Compatibilité avec les serveurs SMTP qui nécessitent une authentification.
+   
+Améliorations :
+   - Intégration de la pile TCP/IP (Digi NetOS 7.3) afin d'améliorer la rapidité et la sécurité
+     des services HTTP/HTTPS. 
+   - Détection des conflits d'adresse IP. 
+   - L'ordre des logs dans les fichiers .csv (DATA_UPS.csv, DATA_UPS_PW.csv, EVENT_SYSTEM.CSV,
+     EVENT_UPS.CSV) a été modifié afin d'être compatible avec eNotify : le dernier évènement arrivé
+     est écrit au début du fichier.
+   - L'accès au fichier ConfigurationData.xml, contenant les paramètres de configuration, via HTTP
+     est protégé par nom utilisateur/mot de passe.
+   - Compatibilité avec les nouveaux onduleurs issus du changement de marque Eaton.
+   - Suppression du sous-répertoire "mgeups" dans les URLs.  
+   - Lorsque le server NTP n'est pas accessible, plus de sélection par défaut de la synchronisation 
+     Date/Heure par NSM ou EPM.
+   - Possibilité de configurer les serveurs SMTP et NTP directement avec leurs adresses IP respectives
+     lorsque le serveur DNS n'est pas accessible.
+   - La fonction Factory Reset du menu série de maintenance fait aussi un retour par défaut des
+     paramètres IP. 
+                   
+Problèmes corrigés :
+   - Les NMS qui réceptionnent les TRAPs sont bien supprimés du fichier ConfigurationData.xml
+     lorsqu'on les supprime via la page Web ou via la fonction GetObject.
+   - Les historiques et les notifications de la sonde d'environnement sont bien formatés en fonction
+     de l'unité sélectionnée : °C ou °F.
+   - Dans la page Configuration Système, prise en compte de l'option "Conserver les paramètres IP",
+     et redémarrage effectué lorsque l'on clique sur "Paramètres par défaut".
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EE
+                              ==================
+
+Nouvelles fonctions :
+   - Ajout de "MGEUPS" comme utilisateur/mot de passe par défaut.
+   
+Améliorations : 
+   - Réinitialisation de la carte après la détection de 5 erreurs consécutives liées
+   à la déssynchronisation de la communication avec l'onduleur.  
+   - L'accès direct aux formulaires HTML par la méthode POST nécessitent une authentification
+   par utilisateur/mot de passe.
+   - Réinitialisation de la carte après 10 erreurs générant le message "Queue full".
+   
+Problèmes corrigés :
+   - La carte s'initialise correctement lorsque l'onduleur démarre alors qu'il est 
+   sur batterie.
+   - L'utilisateur peut rentrer des messages, via l'interface, Web supérieurs à 80
+   caractères. 
+   - L'action sur le bouton "Paramètres par défauts" dans la page "Configuration Système"
+   déclenche la réinitialisation de la carte.
+  
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EC
+                              ==================
+                   
+Problème corrigé :
+   - Augmentation de la taille du buffer de téléchargement afin de pouvoir mettre à jour la NMC
+     avec une version FA.  
+
+Problèmes connus :
+   - Les NMS qui réceptionnent les TRAPs ne sont pas supprimés du fichier ConfigurationData.xml
+     lorsqu'on les supprime via la page Web ou via la fonction GetObject. Ils réapparaissent donc 
+     après un Reset.
+   - Les historiques et les notifications en température sont toujours en °C, même si le °F est
+     l'unité sélectionnée.
+   - Dans la page Configuration Système, non prise en compte de l'option "Conserver les paramètres IP",
+     et non redémarrage lorsque l'on clique sur "Paramètres par défaut".
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EB
+                              ==================
+
+Nouvelles fonctions :
+   - Le logo 'MGE OFFICE PROTECTION SYSTEMS' est complété par 'An Eaton Brand'.
+   - L'accès aux objets XML est indiqué comme FORM plutôt que RAW dans le fichier product.xml.
+   - Compatible avec les nouveaux onduleurs Powerware 5125 et 9135.
+   - Le Logo Eaton Powerware apparait dans les pages HTML pour ces nouveaux onduleurs.
+   - Jusqu'à 3 NMS (au lieu de 1) peuvent être sauvegardés dans le fichier de paramètres XML.
+   - Le texte d'accueil 'EATON' remplace 'MGE OFFICE PROTECTION SYSTEMS' dans le menu de maintenance.
+   - Le Look & Feel Eaton est unifié pour les deux marques Powerware et
+     MGE Office Protection Systems.
+
+Améliorations:
+   - L'adresse du serveur DHCP qui a servi la carte est sauvée en Flash,
+     permettant à ce même serveur DHCP de servir la carte à son redémarrage.
+	   Cette modification avait été supprimée par erreur en passant de la version DB à EA.
+   - Les offsets d'humidité et de température peuvent être rentrés en négatif par la fonction
+     mass settings.
+   - L'index est supprimé dans la page de modification ou ajout de NMS.
+   - Conversions de certains caractères d'ISO en UTF-8.
+   - Dans la page de configuration de la sonde environnement, règle le pb d'afichage en mode avancé.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release EA 		 
+                              ==================
+
+Nouvelles fonctions :
+   - Le nom d'utilisateur et son mot de passe sont par défaut admin/admin .
+   - La nouvelle fonction "Mass Setting" est ajoutée, elle permet d'écrire chaque
+     paramètre de façon individuelle à travers le protocole HTTP.
+   - La carte redémarre de façon automatique quand les paramètres réseau sont
+     modifiés ou lorsqu'on revient aux paramètres par défaut.
+   - Un fichier unique nommé ConfigurationData.xml contient tous les paramètres,
+     il remplace les anciens fichiers .cfg.
+   - Les fonctions Import/Export sont supprimées des pages HTML de settings.
+   - Compatibilité de toutes les pages HTM et des paramètres avec le système
+     de codage UTF-8 .
+   
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release DA 		 
+                              ==================
+
+Nouvelles fonctions :
+  - Compatible avec les onduleurs suivants :
+    - EX 5 / 7 / 11 RT (équipés de Minislot [Q2 08])
+  - Interface Utilisateur à la charte graphique MGE Office Protection Systems
+
+
+Améliorations :
+  - Augmentation du nombre de NSM reliés à la carte :
+    - 35 en mode connecté (TCP) ou
+    - 100 en mode non connecté (UDP) ou
+    - mode mixte : 20 connectés et 50 non connectés.
+  - Amélioration du niveau de sécurité concernant les paramètres d'accès.
+  - Mise à l'heure par NSM V3.10 présent sur le réseau même 
+    s'il n'est pas connecté à la carte.
+  
+
+Problème corrigé :
+  - Rétablissement de la requête "get_object.xml" permettant l'affichage des 
+    valeurs sur le synoptique dans l'EPM V2.08.
+
+Problème connu :	
+  - Gestion des prises programmables sur Pulsar MX 4 / 5 kVA :
+    Pas de prise en compte de la temporisation "Redémarrage après" 
+    => Redémarrage immédiat (Problème ASI).
+    Corrigé à partir de l'indice V05 du logiciel de l'onduleur.
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release CB 		 
+                              ==================
+
+Problèmes corrigés :
+  - Compatibilité avec le nouveau composant Flash pour les cartes NMC indice DA.
+
+Problèmes connus:
+  - Gestion des prises programmables sur Pulsar MX 4 / 5 kVA indice V04 : Pas de prise en compte de la 
+    temporisation "Redémarrage après" => Redémarrage immédiat (Problème ASI).
+
+--------------------------------------------------------------------------------
+
+                              ==================
+                                  Release CA 		 
+                              ==================
+
+Nouvelles fonctions:
+	- Synoptique animé sur l'interface Web : page "Propriétés de l'onduleur"
+	- Mesures lors du survol du synoptique par le pointeur de la souris
+	- Compatible avec les onduleurs suivants :
+		- Pulsar MX 4 / 5 / 10 kVA
+		- Pulsar MX Frame 15 / 20 kVA
+	- Supervision des onduleurs modulaires : états et défauts disponibles
+	- Supervision des onduleurs triphasés : Mesures triphasées dans les historiques des mesures et depuis le synoptique
+	- Gestion intelligente de l'arrêt des serveurs pour les onduleurs équipés de 2 cartes NMC
+	
+Améliorations:
+	- Ajout d'objets dans la MIB MGE : Les objets des mesures triphasées sont maintenant disponibles.
+	- Ajout d'objets dans la MIB IETF 
+		- upsOutputCurrent     33.1.3.3.1.3.1
+		- upsOutputVoltage     33.1.4.4.1.2.1
+		- upsOutputPercentLoad 33.1.4.4.1.5.1
+	- Ajout de TRAP spécifiques à la gestion de la protection 
+		- Trap 67 : upsmgProtectionLost
+		- Trap 68 : upsmgProtectionOK
+	- Ajout de l'objet perte et retour de protection dans liste des objets pouvant être notifiés par e-mail 
+	  et dans les historiques
+	- Remise à zéro des logs (Mesures, Evènements onduleur, Evènements système, Environnement) lors d'un reset usine
+	- Nouvelle interface Web (même interface qu'EPM)
+	- Synchronisation avec le serveur NTP (si configuré) toutes les 5 min au lieu de 24 heures
+
+Problèmes corrigés :
+	- Amélioration de la robustesse des logs
+	- Les adresses e-mail de notification peut contenir 99 caractères au lieu de 49 précédemment
+
+Problèmes connus:	
+	- Gestion des prises programmables sur Pulsar MX 4 / 5 kVA : Pas de prise en compte de la 
+	  temporisation "Redémarrage après" => Redémarrage immédiat (Problème ASI).
+
+---------------------------------------------------------------------------------
+
+                              ==================
+                                  Release BA 		 
+                              ==================
+
+Nouvelles fonctions:
+	- Compatibilité avec la version V3.x et V2.x de NSM
+	- Découverte des cartes avec utilitaire MUPGRADE
+	- Compatibilité avec la fonction Quick Scan de EPM  > 2.05
+	- Date et Heure : Nouvelle option disponible - Mise à l'heure automatique de la carte par EPM V2 ou NSM V3
+	- Pulsar MX (équipé de la version V04L sur le système)
+		- Détection et Visualisation d'une configuration parallèle 1+1 sur chacune des cartes
+		- Notification de la perte et du retour de redondance par e-mail et TRAP
+		- Gestion unique de l'heure UPS (UPS+carte) et mise à jour automatique via réseau  
+	- Nouvelle option permettant de limiter à 10MBit la vitesse dela liaison Ethernet (via port RS232 configuration)
+	
+Améliorations:
+	- Des performances au téléchargement (fiabilité + délai) et mise en place du redémarrage automatique.
+	- Accélération du redémarrage carte après appui sur le bouton "Redémarrage logiciel" dans page "Système"
+	- Accès au menu de configuration sans connexion du réseau Ethernet. 
+	- Maintien de l'accès au Menu de Configuration après connexion/déconnexion de la sonde environnement (ES).
+	- Détection automatique de la langue du navigateur Web.
+	- Ajout d'objets dans la MIB MGE 
+		- upsmgInputLineFailCause
+		- upsmgOutputInverterOff
+		- upsmgOutputOverTemp
+	- Ajout de TRAP spécifiques à la gestion de la redondance 
+		- Trap 65 : upsmgRedundancyLost
+		- Trap 66 : upsmgRedundancyOK
+	- Ajout de l'objet perte et retour de redondance dans liste des objets pouvant être notifiés par e-mail
+	- Simplification des menus du port configuration (RS232)
+	- Informations Sensor et prises switchables visibles à travers EPM
+	- Changement de comportement de l'IHM lors d'une demande d'arrêt manuel via page "Contrôle de l'UPS"
+	- Ajout d'informations dans page "A propos de l'onduleur".
+
+Limitation :
+   	- Réduction à 35 du nombre de NSM (V3.x et/ou V2.6) pouvant être connectés à une carte.
+	- Moins de 10 NSM (V3.x et/ou V2.6) peuvent être connectés à une carte configurée en SSL.
+  	- La NMC MiniSlot 2006 Edition n'est pas compatible avec les UM-clients.
+	- Pulsar MX Frame:
+		  - Warning! : Contacter le support technique pour utiliser 2 "Network Management Card" MiniSlot 2006 Edition.
+		  - Pas d'image spécifique du produit sur la page Web "Propriétés de l'onduleur" (Image générique d'UPS).
+		  - Les mesures triphasées de l'onduleur ne sont pas disponibles pour la supervision sous EPM et dans la MIB MGE.
+		  - Les informations propres aux modules ne sont pas disponibles.
+	
+Problèmes corrigés :
+	- Risque d'arrêt des machines (shutdown) protégées par NSM lors d'un passage 
+	  sur batterie < 20 sec.
+	- Echec de transfert lors du téléchargement d'une nouvelle version logicielle.
+	- Perte des configurations après un redémarrage de la carte. 
+	- Déclenchement de l'arrêt au démarrage de la carte, si le paramètre 
+	"capacité batterie inférieure à" est inférieur au niveau réel de la batterie.
+	- Mauvais affichage de "°C" dans la page "Etat" de la sonde d'environnement 
+	avec le navigateur Mozilla FireFox 1.5.
+	- Mauvaise gestion de l'heure avec un Pulsar MX.
+	- Changement du libellé dans page "Date et heure" 
+		"Changement d'heure été / hiver" par "Changement d'heure été européen"  
+
+Problèmes connus:
+	- Si le champ "Localisation onduleur" dansla rubrique "Système" est supérieur à 20 caractères
+	il peut provoquer un dysfonctionnement de MUPGRADE lors du lancement de la fonction Discovery.
+	Il est fortement recommandé de limiter ce champ à une taille maximum de 20 caractères. 
+
+----------------------------------------------------------------------------------
+								                            
+				                        ==================
+                                    Release AA 		 
+                              	==================
+
+	- Version initiale.
+     
+Problèmes connus:
+	- Pour les produits Evolution 2200 et 3000, les commandes "Arrêt sécurisé
+	immédiat" et "Arrêt sécurisé différé" dans la page "Contrôle de l'onduleur"
+	ne sont pas opérationnelles.
+	- Pas de déclenchement de l'arrêt au démarrage de la carte, si le paramètre 
+	"capacité batterie inférieure à" est inférieur au niveau réel de la batterie.
+	L'arrêt est quand même déclenché par l'onduleur lorsque le niveau de la 
+	batterie est inférieur à 20% ou 30% (suivant la configuration interne de 
+	l'onduleur).
+	- Si la sonde d'environnement est connectée à la NMC MiniSlot 2006 Edition 
+	l'EPM V1.2 ne met plus à jour l'état des prises de l'onduleur.
+	- Problème d'affichage de "°C" dans la page "Etat" de la sonde 
+	d'environnement avec le navigateur Mozilla FireFox 1.5.
+
+Limitation:
+	- En mode SSL, 35 clients NSM max peuvent être connectés.
+
+Note importante:
+	- La NMC MiniSlot 2006 Edition n'est pas compatible avec les UM-clients.
+	- La NMC MiniSlot 2006 Edition n'est pas compatible avec Mupgrade.
+
+
+EOF=
+

@@ -1,0 +1,37 @@
+================================================================================
+Release note for Network Management Card Tool v1.50
+Date : 04/2008  (English/French format)
+MGE Office Protection Systems (c) 2008
+================================================================================
+
+====================================English=====================================
+                              ==================
+                                  Version 1.50		 
+                              ==================
+
+	- Added mass NMC configuration tool.
+
+
+Known issues:
+
+	- Performance/reliability issues with NMCs using SSL:
+  Switch to a non-SSL security mode on the NMC if configuration or firmware upgrade fails.
+  
+                              ==================
+                                  Version 1.50		 
+                              ==================
+                              
+  Initial release.
+  
+====================================Français=====================================
+                              ==================
+                                  Version 1.50		 
+                              ==================
+
+	- Ajout d'un outil de configuration de masse des cartes de communication (NMC).
+
+
+Problèmes connus:
+
+	- Problèmes de performances ou de fiabilité avec des cartes utilisant SSL :
+  Opter pour un mode de sécurité non SSL sur la carte si les opérations de configuration ou de mise à jour de micro-logiciel échouent.
